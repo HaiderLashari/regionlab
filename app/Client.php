@@ -29,7 +29,7 @@ class Client extends Model
         'comment',
         'country_of_residence',
         'nationality',
-        'addtional_detail'
+        'addtional_detail',
     ];
 
 public function users()

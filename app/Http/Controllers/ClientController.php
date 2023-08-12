@@ -51,6 +51,8 @@ class ClientController extends Controller
             'other_phone' => 'nullable',
             'country_of_residence' => 'required',
             'nationality' => 'nullable',
+            'addtional_detail'=>'nullable',
+            
         ]);
 
         $client = new Client;
@@ -161,9 +163,15 @@ class ClientController extends Controller
         foreach ($data as $value) {
            $keysToRemove = ['Person Responsible', 'Status', 'Name', 'Position', 'Time of Call', 'Work Phone', 'Country', 'Other Phone Number', 'Work E-mail', 'Other E-mail', 'Company Name', 'Comments', 'Lead ID'];
             $filteredData = array_diff_key($value, array_flip($keysToRemove));
+    
+            if(empty($filteredData)){
+                $additional = null;
+            }
+            else{
            $additional = json_encode($filteredData,true);
-            $value['addtional_detail'] = $additional;
-            // dd($value);
+            }
+             $value['addtional_detail'] = $additional;
+
             $fb = $value;
              $col = [
                 'person_responsible' => $fb['Person Responsible'],
@@ -180,9 +188,8 @@ class ClientController extends Controller
                 'comment' => $fb['Comments'],
                 'lead_id' => $fb['Lead ID'],
             ];
-            if($additional){
                 $col['addtional_detail'] = $additional;
-            }
+            
             $obj = new Client;
             $obj->create($col);
         }

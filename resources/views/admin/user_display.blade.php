@@ -7,6 +7,10 @@
   thead tr th{
     color: white!important;
   }
+/*  .select2{
+      width: 100%!important;
+
+  }*/
 </style>
 @if(Auth::check() && Auth::user()->role == 'admin')
 <div style="background:#efeff6;" class="ml-3 d-flex "><a href="{{ url('user/insert')}}"  class="btn btn-primary px-4 py-2 " style="font-size: 20px; font-weight: bolde;">Add</a></div>

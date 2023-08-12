@@ -89,13 +89,13 @@
     View Detail
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{url('/client-profile/'.$val->id)}}">Profile</a>
+     <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;" data-toggle="modal" data-target="#exampleModaldetail{{$val->id}}" >Detail</a>
      <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;" data-toggle="modal" data-target="#exampleModal{{$val->id}}" >Status</a>
      <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;" data-toggle="modal" data-target="#exampleModalabc{{$val->id}}" >Assign</a>
      <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;" data-toggle="modal" data-target="#exampleModalcomnt{{$val->id}}" >Comment</a>
-    <a class="dropdown-item" href="{{url('/view_comment/'.$val->id)}}">View Comment</a>
-    <a class="dropdown-item" href="{{ route('client.edit', ['id' => $val->id]) }}">Update</a>
-    <a class="dropdown-item" href="{{ route('client.destroy', ['id' => $val->id]) }}">Delete</a>
+     <a class="dropdown-item" href="{{url('/view_comment/'.$val->id)}}">View Comment</a>
+     <a class="dropdown-item" href="{{ route('client.edit', ['id' => $val->id]) }}">Update</a>
+     <a class="dropdown-item" href="{{ route('client.destroy', ['id' => $val->id]) }}">Delete</a>
   </div>
 </div></td>
    </tr>
@@ -130,7 +130,7 @@
     View Detail
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="{{url('/client-profile/'.$val->id)}}">Profile</a>
+    <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;" data-toggle="modal" data-target="#exampleModaldetail{{$val->id}}" >Detail</a>
     <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;"  data-toggle="modal" data-target="#exampleModal{{$val->id}}" >Status</a>
     <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;"   data-toggle="modal" data-target="#exampleModalcomnt{{$val->id}}" >Comment</a>
     <a class="dropdown-item" href="{{url('/view_comment/'.$val->id)}}">View Comment</a>
@@ -196,6 +196,142 @@
  </div>
 @endforeach 
 
+
+@foreach($clients as $index => $val)
+<div class="modal fade" id="exampleModaldetail{{$val->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$val->id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{$val->id}}">Client Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+     <style type="text/css">
+ .modeltable  tr{
+ border: 1px solid #7178a3;
+  }
+   .modeltable tr th{
+    font-size: 16px;
+    padding: 10px 0px 10px 10px;
+      border: 1px solid #7178a3;
+   }
+    .modeltable tr td{
+      font-size: 14px;
+    padding: 10px 0px 10px 10px;
+    
+   }
+     </style>  
+ 
+
+<table class="modeltable m-auto" style="width:90%">
+ 
+@if($val->addtional_detail)
+ @php
+  $merge = array_merge($val->toArray(), json_decode($val->addtional_detail, true));
+  unset($merge['addtional_detail']);
+  unset($merge['id']);
+  unset($merge['created_at']);
+  unset($merge['updated_at']);
+ @endphp
+@foreach($merge as $k => $v)
+@if(!empty($v))
+<tr>
+    <th>{{$k}}:</th>
+    <td>{{$v}}</td>
+  </tr>
+@endif
+@endforeach 
+@else
+
+  <tr>
+    <th>Person Responsible:</th>
+    <td>{{$val->person_responsible}}</td>
+  </tr>
+   @if($val->status)
+  <tr>
+    <th>Status:</th>
+    <td>{{$val->status}}</td>
+  </tr>
+  @endif
+  <tr>
+    <th>Name:</th>
+    <td>{{$val->name}}</td>
+  </tr>
+    <tr>
+    <th>Posotion:</th>
+    <td>{{$val->position}}</td>
+  </tr>
+  <tr>
+    <th>Time of Call:</th>
+    <td>{{$val->time_of_cell}}</td>
+  </tr>
+  <tr>
+    <th>Work Phone:</th>
+    <td>{{$val->phone}}</td>
+  </tr>
+    <tr>
+    <th>Country:</th>
+    <td>{{$val->country_of_residence}}</td>
+  </tr>
+  @if($val->other_phone )
+  <tr>
+    <th>Other Phone Number:</th>
+    <td>{{$val->other_phone}}</td>
+  </tr>
+  @endif
+  <tr>
+    <th>Work E-mail:</th>
+    <td>{{$val->email}}</td>
+  </tr>
+   @if($val->other_email )
+    <tr>
+    <th>Other E-mail:</th>
+    <td>{{$val->other_email}}</td>
+  </tr>
+  @endif
+  <tr>
+    <th>Company Name:</th>
+    <td>{{$val->company}}</td>
+  </tr>
+  <tr>
+    <th>Lead ID:</th>
+    <td>{{$val->lead_id}}</td>
+  </tr>
+    @if($val->address)
+    <tr>
+    <th>Address:</th>
+    <td>{{$val->address}}</td>
+  </tr>
+  @endif
+    @if($val->nationality)
+    <tr>
+    <th>Nationality:</th>
+    <td>{{$val->nationality}}</td>
+  </tr>
+  @endif
+    @if($val->addtional_detail )
+    <tr>
+    <th>Addtional Details:</th>
+    <td>{{$val->addtional_detail}}</td>
+  </tr>
+  @endif
+  @endif 
+</table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach 
+
+
+
 @foreach($clients as $index => $val)
 <div class="modal fade" id="exampleModalabc{{$val->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$val->id}}" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -213,7 +349,7 @@
             @foreach($users as $user)
             <option value="{{$user->id}}">{{$user->name}}</option>
             @endforeach
-            
+
           </select>
         </div>
       <div class="modal-footer">

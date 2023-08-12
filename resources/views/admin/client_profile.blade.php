@@ -69,6 +69,44 @@ body {
                 
                 <div class="row mt-2">
                
+
+
+
+
+
+
+
+
+
+          @dd($val)
+ @php
+  $merge = array_merge($val->toArray(), json_decode($val->addtional_detail, true));
+  unset($merge['addtional_detail']);
+  unset($merge['id']);
+  unset($merge['created_at']);
+  unset($merge['updated_at']);
+ @endphp
+@foreach($merge as $k => $v)
+@if(!empty($v))
+<tr>
+    <th>{{$k}}:</th>
+    <td>{{$v}}</td>
+  </tr>
+@endif
+@endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
                 <div class="row mt-3">
                       <div class="col-md-12">
