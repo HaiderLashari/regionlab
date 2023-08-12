@@ -12,46 +12,65 @@
                     <form action=" " method="POST" class=" p-5 border">
                         @csrf
                         <div class="form-group">
-                            <label for="lead_id">Lead ID:</label>
-                            <input type="text" class="form-control" id="lead_id" name="lead_id"  value="{{$client->lead_id}}"  required>
+                            <label for="person_responsible">Person Responsible:</label>
+                            <input type="text" class="form-control"  id="person_responsible" name="person_responsible" value="{{$client->person_responsible}}" required>
                         </div>
-                       
+                                           
                         <div class="form-group">
                             <label for="name">Name:</label>
                             <input type="text" class="form-control" id="name" name="name"  value="{{$client->name}}"  required>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email"  value="{{$client->email}}"  required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone:</label>
-                            <input type="text" class="form-control" id="phone" name="phone"  value="{{$client->phone}}"  required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address:</label>
-                            <input type="text" class="form-control" id="address" name="address"  value="{{$client->address}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company:</label>
-                            <input type="text" class="form-control" id="company" name="company"  value="{{$client->company}}"  required>
-                        </div>
+
                         <div class="form-group">
                             <label for="position">Position:</label>
                             <input type="text" class="form-control" id="position" name="position"  value="{{$client->position}}"  required>
                         </div>
+
                         <div class="form-group">
-                            <label for="other_email">Other Email:</label>
-                            <input type="email" class="form-control" id="other_email" name="other_email" value="{{$client->other_email}}"  >
+                            <label for="time_of_cell">Time of Call:</label>
+                            <input type="time" class="form-control" value="{{$client->time_of_cell}}" id="time_of_cell" name="time_of_cell" required>
                         </div>
+
                         <div class="form-group">
-                            <label for="other_phone">Other Phone:</label>
-                            <input type="text" class="form-control" id="other_phone" name="other_phone" value="{{$client->other_phone }}"  >
+                            <label for="phone">Work Phone:</label>
+                            <input type="text" class="form-control" id="phone" name="phone"  value="{{$client->phone}}"  required>
                         </div>
+
                         <div class="form-group">
-                            <label for="country_of_residence">Country of Residence:</label>
+                            <label for="country_of_residence">Country:</label>
                             <input type="text" class="form-control" id="country_of_residence" name="country_of_residence"  value="{{$client->country_of_residence }}"  required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="other_phone">Other Phone Number:</label>
+                            <input type="text" class="form-control" id="other_phone" name="other_phone" value="{{$client->other_phone }}"  >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Work E-mail:</label>
+                            <input type="email" class="form-control" id="email" name="email"  value="{{$client->email}}"  required>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="other_email">Other E-mail:</label>
+                            <input type="email" class="form-control" id="other_email" name="other_email" value="{{$client->other_email}}"  >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company Name:</label>
+                            <input type="text" class="form-control" id="company" name="company"  value="{{$client->company}}"  required>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label for="lead_id">Lead ID:</label>
+                            <input type="text" class="form-control" id="lead_id" name="lead_id"  value="{{$client->lead_id}}"  required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <input type="text" class="form-control" id="address" name="address"  value="{{$client->address}}">
+                        </div>
+                                 
                         <div class="form-group">
                             <label for="nationality">Nationality:</label>
                             <input type="text" class="form-control" id="nationality" name="nationality"  value="{{$client->nationality }}" >
