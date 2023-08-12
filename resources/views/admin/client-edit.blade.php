@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="address">Address:</label>
-                            <input type="text" class="form-control" id="address" name="address"  value="{{$client->address}}"  required>
+                            <input type="text" class="form-control" id="address" name="address"  value="{{$client->address}}">
                         </div>
                         <div class="form-group">
                             <label for="company">Company:</label>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nationality">Nationality:</label>
-                            <input type="text" class="form-control" id="nationality" name="nationality"  value="{{$client->nationality }}"  required>
+                            <input type="text" class="form-control" id="nationality" name="nationality"  value="{{$client->nationality }}" >
                         </div>
                      
                         <input type="submit" value=" Update" class="btn btn-primary">

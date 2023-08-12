@@ -44,7 +44,7 @@
                         
 
                         <li class="nav-item dropdown nav-user">
-                            <a class="nav-link border btn-info text-white px-5 nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accout</a>
+                            <a class="nav-link border btn-info text-white px-5  nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accout</a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown bg-info" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
                                     <h5 class="mb-0 text-white nav-user-name">Region</h5>
