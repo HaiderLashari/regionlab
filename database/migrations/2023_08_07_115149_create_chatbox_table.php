@@ -19,8 +19,8 @@ class CreateChatboxTable extends Migration
             $table->unsignedBigInteger('reciver_id');
             $table->text('message');
             $table->timestamps();
-            $table->foreign('sender_id')->references('id')->on('users');
-            $table->foreign('reciver_id')->references('id')->on('users');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('reciver_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
