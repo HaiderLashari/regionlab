@@ -28,7 +28,7 @@ aside{
 	vertical-align:top;
 }
 main{
-	width:490px;
+	width:572px;
 	height:800px;
 	display:inline-block;
 	font-size:15px;
@@ -59,7 +59,7 @@ aside ul{
 	padding-left:0;
 	margin:0;
 	list-style-type:none;
-	overflow-y:scroll;
+	overflow-y:AUTO;
 	height:690px;
 }
 aside li{
@@ -113,6 +113,7 @@ aside li h3{
 }
 
 main header{
+	background: #242849;
 	height:110px;
 	padding:30px 20px 30px 40px;
 }
@@ -142,13 +143,14 @@ main header h3{
 }
 
 #chat{
+	background: #a9b3b0;
 	padding-left:0;
 	margin:0;
 	list-style-type:none;
-	overflow-y:scroll;
+	overflow-y:AUTO;
 	height:535px;
-	border-top:2px solid #fff;
-	border-bottom:2px solid #fff;
+/*	border:1px solid ;
+	border-bottom:2px solid #fff;*/
 }
 #chat li{
 	padding:10px 30px;
@@ -178,9 +180,11 @@ main header h3{
 }
 #chat .you .message{
 	background-color:#58b666;
+	    word-wrap: break-word;
 }
 #chat .me .message{
 	background-color:#6fbced;
+	    word-wrap: break-word;
 }
 #chat .triangle{
 	width: 0;
@@ -198,6 +202,7 @@ main header h3{
 }
 
 main footer{
+	background:#a9b3b0;
 	height:155px;
 	padding:20px 30px 10px 20px;
 }
@@ -229,14 +234,21 @@ main footer a{
 	margin-top:5px;
 	display:inline-block;
 }
+.send{
+ text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #6fbced;
+    vertical-align: top;
+  
+    display: inline-block;
+}
 
 </style>
 
 <div id="container" style="width:80%;">
 	<aside>
-		<header>
-			<input type="text" placeholder="search">
-		</header>
+	
 		<ul>
 			 @if(Auth::check() && Auth::user()->role == 'admin')
               @foreach($users as $val)
@@ -254,19 +266,20 @@ main footer a{
 			</li>
 			@endforeach
 			@elseif(Auth::check() && Auth::user()->role == 'user')
-
+               @foreach($admin as $vel)
 		  	<li>
 			
-				<a href="{{url('/chatbox/'.$admin['id'])}}">
-
+                  
+				<a href="{{url('/chatbox/'.$vel['id'])}}">
 				<img class="rounded-circle mt-2" width="45px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
 				<div>
-					<h2>{{$admin['name']}}</h2>
+					<h2>{{$vel['name']}}</h2>
 				</div>
 
 				</a>
 			
 			</li>
+		 @endforeach
 			@endif
 	
 		</ul>
@@ -279,7 +292,7 @@ main footer a{
 			<img class="rounded-circle mt-2" width="45px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
 			
 			
-				<h2 class="mt-3 ml-3">Chat with  {{$user->name}}</h2>
+				<h2 class="mt-3 text-white ml-3">Chat with  {{$user->name}}</h2>
 				
 		</header>
 	
@@ -291,11 +304,11 @@ main footer a{
 				<div class="message">
 					{{$value->message}}
 				</div>
-				<div class="triangle"></div>
+				
 				<div class="entete">
 					<span class="status green"></span>
-					<h2>{{$user->name}}</h2>
-					<h3>{{$value->created_at->format('d-m-y / h:i:s')}}</h3>
+					<h2 class="text-white">{{$user->name}}</h2>
+					<h3 class="text-white">{{$value->created_at->format(' h:i:s')}}</h3>
 				</div>
 			</li>
 			
@@ -304,10 +317,10 @@ main footer a{
 				<div class="message">
 					{{$value->message}}
 				</div>
-				<div class="triangle"></div>
+				
 				<div class="entete">
-					<h3>{{$value->created_at->format('d-m-y / h:i:s')}}</h3>
-					<h2>{{ auth()->user()->name }}</h2>
+					<h3 class="text-white">{{$value->created_at->format(' h:i:s')}}</h3>
+					<h2 class="text-white">{{ auth()->user()->name }}</h2>
 					<span class="status blue"></span>
 				</div>
 			</li>
@@ -317,14 +330,23 @@ main footer a{
 		<footer>
 		 	<form action = "{{url('/adminmessage/'.@$user->id)}}" method="POST" >
            @csrf
-           <input type="hidden" name="reciver_id" value="{{@$user->id}}">
+          <div class="container">
+          <div class="row">
+          <div class="col-md-10 px-0">
+ <input type="hidden" name="reciver_id" value="{{@$user->id}}">
 			<textarea type= "text" name="message" placeholder="Type your message"></textarea>
-			<input type="submit" value="send">
-
+          </div>
+            <div class="col-md-2 mt-5">
+            <input type="submit" class="btn" value="send">	
+          </div>
+          </div>
+          </div>
+          
+          
 			</form> 
 		</footer>
 	  @else
-	  <img style="height: 90%;width: 100%"  src="{{url('/public/empitysms.png')}}">
+	  <img style="height: 100%;width: 100%"  src="{{url('/public/empitysms.png')}}">
 	  @endif
 	</main>
 </div>

@@ -27,7 +27,8 @@ class ClientController extends Controller
         $finds = auth::user();
         $finds = $finds->clients()->get();   
         $clients = Client::all();
-        $users = User::all();
+        $users = User::where('id', '!=', auth()->user()->id)->get();
+
         return view('admin.client-display', ['clients' => $clients,'users' => $users ,'finds'=>$finds]);
     }
 
@@ -130,7 +131,6 @@ class ClientController extends Controller
 
     if ($request->hasFile('file')) {
         $file = $request->file('file');
-         // $add = $request->file('file')->expect('person_responsible','status','name','position','time_of_cell','phone','country_of_residence','other_phone','email','other_email','company','comment','lead_id');
 
         $path = $file->storeAs('uploads', $file->getClientOriginalName(), 'public'); 
         $url = url('storage/app/public/'.$path);
@@ -206,8 +206,10 @@ class ClientController extends Controller
 
 
     public function showUserAccessForm()
-    {
-        $users = User::all();
+    {   
+       
+            $id = Auth::user()->id;
+          $users = User::where('id', '!=', $id)->get();
         return redirect()->route('client.display', ['users' => $users]);
     }
 

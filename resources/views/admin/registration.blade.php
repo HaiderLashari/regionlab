@@ -72,10 +72,13 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
+              @error('email') <span class="text-danger error">{{ $message }}</span>@enderror
+
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+                  @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
                 <label for="role">Role</label>

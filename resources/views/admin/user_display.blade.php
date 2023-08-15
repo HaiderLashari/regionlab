@@ -7,10 +7,9 @@
   thead tr th{
     color: white!important;
   }
-/*  .select2{
-      width: 100%!important;
-
-  }*/
+ span.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
 </style>
 @if(Auth::check() && Auth::user()->role == 'admin')
 <div style="background:#efeff6;" class="ml-3 d-flex "><a href="{{ url('user/insert')}}"  class="btn btn-primary px-4 py-2 " style="font-size: 20px; font-weight: bolde;">Add</a></div>
@@ -26,7 +25,7 @@
         <th>Role</th>
         <th>Update</th>
         <th>Delete</th>
-        <th>Access to Client</th>
+        <th>Assign to Client</th>
       </tr>
     </thead>
     <tbody>
@@ -38,9 +37,11 @@
        <td>{{$val->role}}</td>
        <td><a href="{{ route('user.edit', ['id' => $val->id]) }}" class="btn btn-success">Update</a></td>
        <td><a href="{{ route('user.destroy', ['id' => $val->id]) }}" class="btn btn-danger">Delete</a></td>
+       
        <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$val->id}}">
          Assign
        </button></td>
+       
      </tr>
           @endforeach
       </tbody>

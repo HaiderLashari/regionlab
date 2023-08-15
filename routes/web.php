@@ -42,7 +42,7 @@ Route::get('/client-profile/{id}', [ClientController::class, 'clientprofile'])->
 
 Route::get('client-access', [HomeController::class, 'showClientAccessForm']);
 Route::post('client-access/{id}', [HomeController::class, 'saveClientAccess']);
-Route::get('user-access', [ClientController::class, 'showUserAccessForm']);
+// Route::get('user-access', [ClientController::class, 'showUserAccessForm']);
 Route::post('user-access/{id}', [ClientController::class, 'saveUserAccess']);
 
 Route::post('/upload', [ClientController::class, 'upload'])->name('upload');

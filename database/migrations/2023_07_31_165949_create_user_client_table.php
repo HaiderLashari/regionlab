@@ -15,7 +15,7 @@ class CreateUserClientTable extends Migration
     {
         Schema::create('user_client', function (Blueprint $table) {
           $table->id();
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->unique();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

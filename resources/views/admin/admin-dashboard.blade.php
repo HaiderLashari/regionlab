@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{url('/public/assets/vendor/charts/morris-bundle/morris.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url('/public/assets/vendor/daterangepicker/daterangepicker.css')}}" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Region Lab</title>
 </head>
 
 <body>
@@ -44,10 +44,10 @@
                         
 
                         <li class="nav-item dropdown nav-user">
-                            <a class="nav-link border btn-info text-white px-5  nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accout</a>
-                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown bg-info" aria-labelledby="navbarDropdownMenuLink2">
+                            <a class="nav-link border nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accout</a>
+                            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown b" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
-                                    <h5 class="mb-0 text-white nav-user-name">Region</h5>
+                                    <h5 class="mb-0 text-white nav-user-name">{{auth()->user()->name}}</h5>
                                 </div>
                                 @if(auth()->check())
                                 <form action="{{ route('logout') }}" method="POST">

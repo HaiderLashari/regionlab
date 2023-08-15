@@ -39,8 +39,11 @@ public function show()
 }
 public function display()
 {    
+
     $finds =auth::user();
-    $finds = $finds->clients()->get();   
+    
+    $finds = $finds->clients()->get(); 
+
     $users = User::all();
     $clients = Client::all();
     return view('admin.user_display', ['users' => $users, 'clients' => $clients,'finds'=>$finds]);
@@ -49,6 +52,13 @@ public function display()
 
 public function create(Request $request)
 {
+          $validator =  $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'role'=>'required',
+            'password' => 'required|min:8'
+        ]);
+
     $user = new User;
     $user->name = $request->name;
     $user->email = $request->email;
@@ -70,7 +80,7 @@ public function update(Request $request, $id)
     $user = User::find($id);
     $user->name = $request->name;
     $user->email = $request->email;
-    $user->password = $request->password;
+    $user->password = Hash::make($request->password);
     $user->role = $request->role;
     $user->save();
 
@@ -93,9 +103,12 @@ public function showClientAccessForm()
 }
 
 public function saveClientAccess(Request $request,$id)
-{
+{   
+
     $user = User::find($id);
+
     foreach ($request->client_id as $id) {
+
         $user->clients()->attach($id);
     }
     $show = $user->clients()->get();
@@ -114,8 +127,8 @@ public function chatbox($id=null)
     $result=$chatbox->merge($chatrecive);
     $result = $result->sortBy('created_at');
 
-    $admin = User::where('role', 'admin')->get()->first()->toArray();
-  
+    $admin = User::where('role', 'admin')->get()->toArray();
+    
     return view('admin.chatbox',['user' => $user,'users' => $users,'chatbox'=>$chatbox,'result'=>$result ,'admin' => $admin ,'chatrecive' => $chatrecive]);
 }
 

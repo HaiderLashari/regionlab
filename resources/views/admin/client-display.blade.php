@@ -6,14 +6,14 @@
     color: white!important;
   }
   .dataTables_length{
-  padding:10px 0px 0px 7px;
+  padding:15px 0px 0px 10px;
   }
   .dataTables_info{
      padding:0px 0px 0px 8px;
      margin-top: 10px;
   }
   .dataTables_filter{
-    margin:8px!important;
+    margin:10px!important;
   }
   .dataTables_paginate{
      padding: 9px!IMPORTANT;
@@ -39,7 +39,7 @@
 </button>
 </div> 
 @endif
-<div class="container  card  px-0 " style="width: 100%;">
+<div class="container  card  px-0 " style="width: 98%;">
   <table class="table" id="clientTable">
     <thead class="bg-primary text-white">
       <tr >
@@ -134,8 +134,8 @@
     <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;"  data-toggle="modal" data-target="#exampleModal{{$val->id}}" >Status</a>
     <a class="dropdown-item btn" style="padding: 0.25rem 1.5rem;"   data-toggle="modal" data-target="#exampleModalcomnt{{$val->id}}" >Comment</a>
     <a class="dropdown-item" href="{{url('/view_comment/'.$val->id)}}">View Comment</a>
-    <a class="dropdown-item" href="{{ route('client.edit', ['id' => $val->id]) }}">Update</a>
-    <a class="dropdown-item" href="{{ route('client.destroy', ['id' => $val->id]) }}">Delete</a>
+  {{--   <a class="dropdown-item" href="{{ route('client.edit', ['id' => $val->id]) }}">Update</a>
+    <a class="dropdown-item" href="{{ route('client.destroy', ['id' => $val->id]) }}">Delete</a> --}}
   </div>
 </div></td> 
    </tr>
@@ -161,6 +161,7 @@
             @csrf
               <label for="status">Status:</label>
               <select  class="form-control"  name="status" required>
+                <option >{{$val->status}}</option>
                 <option value="Open / Fresh Lead">Open / Fresh Lead</option>
                 <option value="Open –Attempted Contact">Open –Attempted Contact</option>
                 <option value="Open – Booked Appointment">Open – Booked Appointment</option>
@@ -355,6 +356,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit"  class="btn btn-primary">Save changes</button>
+      
       </div>
       </form>
     </div>
