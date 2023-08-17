@@ -38,9 +38,13 @@
        <td><a href="{{ route('user.edit', ['id' => $val->id]) }}" class="btn btn-success">Update</a></td>
        <td><a href="{{ route('user.destroy', ['id' => $val->id]) }}" class="btn btn-danger">Delete</a></td>
        
-       <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$val->id}}">
+       <td>
+        @if($val->role == 'user')
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$val->id}}">
          Assign
-       </button></td>
+       </button>
+       @endif
+     </td>
        
      </tr>
           @endforeach
@@ -61,7 +65,7 @@
 
                   <form action="{{url('/client-access/'.$val->id)}}" id="accessForm" method="post">
                     @csrf
-                   <select name="client_id[]" class="multiple" class="js-states form-control" multiple >
+                   <select name="client_id[]" class="multiple" class="js-states form-control" multiple required>
                     @foreach($clients as $client)
                     <option value="{{$client->id}}">{{$client->name}}</option>
                     @endforeach
@@ -69,7 +73,11 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit"  class="btn btn-primary">Save changes</button>
+
+             
+        <button type="submit"  class="btn btn-primary">Save changes</button>
+      
+            
                 </div>
               </form>
 

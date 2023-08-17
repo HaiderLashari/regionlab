@@ -11,7 +11,6 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
 use DB;
 
 class ClientController extends Controller
@@ -28,7 +27,9 @@ class ClientController extends Controller
         $finds = $finds->clients()->get();   
         $clients = Client::all();
         $users = User::where('id', '!=', auth()->user()->id)->get();
-
+        $client = Client::all();
+        // $firstassign = $client->users()->pluck('users.id')->toArray();
+        
         return view('admin.client-display', ['clients' => $clients,'users' => $users ,'finds'=>$finds]);
     }
 
@@ -213,14 +214,36 @@ class ClientController extends Controller
         return redirect()->route('client.display', ['users' => $users]);
     }
 
-    public function saveUserAccess(Request $request,$id)
-    {
-        $client = Client::find($id);
-        foreach ($request->user_id as $id) {
-            $client->users()->attach($id);
-        }
-        return redirect()->route('client.display'); 
+    // public function saveUserAccess(Request $request,$id)
+    // {
+    //     $client = Client::find($id);
+    //     foreach ($request->user_id as $id) {
+    //         $client->users()->attach($id);
+    //     }
+    //     return redirect()->route('client.display'); 
+    // }
+
+
+ public function saveUserAccess(Request $request, $id)
+{
+    $client = Client::find($id);
+    $requestedUsers = $request->user_id;
+  
+    $firstassign = $client->users()->pluck('users.id')->toArray();
+   
+    $detachusers = array_diff($firstassign, $requestedUsers);
+    foreach ($detachusers as $userId) {
+        $client->users()->detach($userId);
     }
+
+    $attachusers = array_diff($requestedUsers, $firstassign);
+    foreach ($attachusers as $userId) {
+        $client->users()->attach($userId);
+    }
+    
+    return redirect()->route('client.display');
+}
+
 
     public function addcomment(Request $request,$id)
     {
@@ -285,6 +308,26 @@ class ClientController extends Controller
     }
 
 
-
-
 }
+
+
+
+// public function display()
+// {
+//     $finds = auth()->user();
+//     $clients = $finds->clients()->get();
+//     $users = User::where('id', '!=', $finds->id)->get();
+
+//     $clientAssignments = [];
+//     foreach ($clients as $client) {
+//         $firstassign = $client->users()->pluck('users.id')->toArray();
+//         $clientAssignments[$client->id] = $firstassign;
+//     }
+
+//     return view('admin.client-display', [
+//         'clients' => $clients,
+//         'users' => $users,
+//         'finds' => $finds,
+//         'clientAssignments' => $clientAssignments,
+//     ]);
+// }

@@ -194,3 +194,135 @@ body {
 </div>
 
 @endsection
+
+
+
+
+    // public function showUserAccessForm()
+    // {   
+       
+    //         $id = Auth::user()->id;
+    //       $users = User::where('id', '!=', $id)->get();
+    //     return redirect()->route('client.display', ['users' => $users]);
+    // }
+
+    // public function saveUserAccess(Request $request,$id)
+    // {
+    //     $client = Client::find($id);
+    //     foreach ($request->user_id as $id) {
+    //         $client->users()->attach($id);
+    //     }
+    //     return redirect()->route('client.display'); 
+    // }
+
+
+
+//  public function saveUserAccess(Request $request, $id)
+// {
+//     $client = Client::find($id);
+
+//     $assignedUsers = $client->users()->pluck('users.id');
+
+//     foreach ($request->user_id as $userId) {
+//         if (in_array($userId, $assignedUsers)) {
+//             return redirect()->route('client.display');
+//         }
+
+//         $client->users()->attach($userId);
+//     }
+
+//     return redirect()->route('client.display');
+// }
+
+
+// public function saveUserAccess(Request $request, $id)
+// {
+//     $clients = DB::table('user_client')->where('client_id', $id)->get()->count();
+//     dd($clients);
+//     if($clients >= 1){
+
+//     }
+//     $client = Client::find($id);
+//     $requestedUser = $request->user_id;
+    
+//     $assignedUser = $client->users()->pluck('users.id')->toArray();
+    
+//     $usersToAssign = array_diff($requestedUser, $assignedUser);
+    
+//     if (count($usersToAssign) >= 0) {
+//         foreach ($usersToAssign as $userId) {
+
+//             $client->users()->attach($userId);
+//         }
+//         return redirect()->route('client.display');
+//     } else {
+//         return redirect()->route('client.display');
+//     }
+// }
+
+// public function saveClientAccess(Request $request,$id)
+// {   
+   
+
+//     $user = User::find($id);
+
+//     foreach ($request->client_id as $id) {
+
+//         $user->clients()->attach($id);
+//     }
+//     $show = $user->clients()->get();
+
+//     return redirect()->route('user.display'); 
+// }   
+
+
+// public function saveClientAccess(Request $request, $id)
+// {   
+//     $user = User::find($id);
+//     $attachedClients = $user->clients()->pluck('clients.id')->toArray();
+//     $requestedClients = $request->client_id;
+    
+//     $clientsToAttach = array_diff($requestedClients, $attachedClients);
+    
+//     if (count($clientsToAttach) > 0) {
+//         foreach ($clientsToAttach as $clientId) {
+//             $user->clients()->attach($clientId);
+//         }
+//     }
+    
+//     return redirect()->route('user.display');
+//     }
+
+
+[11:02 PM, 8/16/2023] haiderlashari1122: public function saveClientAccess(Request $request, $id)
+{
+    $client = Client::find($id);
+    $requestedUsers = $request->user_id;
+
+    $currentAssignedUsers = $client->users()->pluck('users.id')->toArray();
+    
+    // Detach users not in the requested list
+    $usersToDetach = array_diff($currentAssignedUsers, $requestedUsers);
+    foreach ($usersToDetach as $userId) {
+        $client->users()->detach($userId);
+    }
+
+    // Attach new users
+    $usersToAttach = array_diff($requestedUsers, $currentAssignedUsers);
+    foreach ($usersToAttach as $userId) {
+        $client->users()->attach($userId);
+    }
+    
+    return redirect()->route('client.display');
+}
+{{-- [11:05 PM, 8/16/2023] haiderlashari1122: <form action="{{ route('save.client.access', ['id' => $client->id]) }}" method="post">
+    @csrf
+    <select name="user_id[]" multiple>
+        @foreach ($users as $user)
+            <option value="{{ $user->id }}" @if(in_array($user->id, $assignedUserIds)) selected @endif>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+    <button type="submit">Save</button>
+</form> --}}

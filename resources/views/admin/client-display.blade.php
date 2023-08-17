@@ -64,6 +64,7 @@
     <tbody>
       @if(Auth::check() && Auth::user()->role == 'admin')
       @foreach($clients as $index => $val)
+       
       <tr class="border">
        <td>{{$index+1}}</td>
        <td>{{$val->name}}</td>
@@ -161,7 +162,11 @@
             @csrf
               <label for="status">Status:</label>
               <select  class="form-control"  name="status" required>
+                @if($val->status){
                 <option >{{$val->status}}</option>
+                }@else{
+                     <option value=" ">Select your status</option>
+                }@endif
                 <option value="Open / Fresh Lead">Open / Fresh Lead</option>
                 <option value="Open –Attempted Contact">Open –Attempted Contact</option>
                 <option value="Open – Booked Appointment">Open – Booked Appointment</option>
@@ -332,7 +337,6 @@
 @endforeach 
 
 
-
 @foreach($clients as $index => $val)
 <div class="modal fade" id="exampleModalabc{{$val->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$val->id}}" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -346,17 +350,24 @@
       <div class="modal-body">
         <form action="{{url('/user-access/'.$val->id)}}" id="accessForm" method="post">
           @csrf
-          <select name="user_id[]" class="form-control">
+            @php
+            $client = App\Client::find($val->id);
+            // echo $client->id;
+            $assignuser = $client->users()->get()->first()->toArray();
+         
+            @endphp
+          <select name="user_id[]" class="form-control" required>
             @foreach($users as $user)
-            <option value="{{$user->id}}">{{$user->name}}</option>
+            <option  value="{{$user->id}}"@if(in_array($user->id, $assignuser)) selected @endif >{{$user->name}}</option>
             @endforeach
 
           </select>
         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit"  class="btn btn-primary">Save changes</button>
       
+        <button type="submit"  class="btn btn-primary">Save changes</button>
+   
       </div>
       </form>
     </div>
@@ -385,7 +396,7 @@
                                 <option value="file">File</option>
                               </select>
                         </div>
-                        <div class="form-group fileInput mt-4"  style="display: none;">
+                        <div class="form-group fileInput mt-4"  styl7="display: none;">
                             <label class="mb-0">Add Comment File</label><br>
                               <input class="w-75 mt-3 ml-3" type="file" name="file" accept=".csv">
                         </div>

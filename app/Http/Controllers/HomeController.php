@@ -41,7 +41,7 @@ public function display()
 {    
 
     $finds =auth::user();
-    
+
     $finds = $finds->clients()->get(); 
 
     $users = User::all();
@@ -102,19 +102,44 @@ public function showClientAccessForm()
     return redirect()->route('user.display',['clients' => $clients]); 
 }
 
-public function saveClientAccess(Request $request,$id)
+
+// public function saveClientAccess(Request $request,$id)
+// {   
+   
+
+//     $user = User::find($id);
+
+//     foreach ($request->client_id as $id) {
+
+//         $user->clients()->attach($id);
+//     }
+//     $show = $user->clients()->get();
+
+//     return redirect()->route('user.display'); 
+// }   
+
+  
+public function saveClientAccess(Request $request, $id)
 {   
-
-    $user = User::find($id);
-
-    foreach ($request->client_id as $id) {
-
-        $user->clients()->attach($id);
+    $requestedClients = $request->client_id;
+    
+    foreach ($requestedClients as $clientId) {
+        $clientsAttachedToOtherUsers = User::whereHas('clients', function ($query) use ($clientId) {
+            $query->where('clients.id', $clientId);
+        })->where('id', '<>', $id)->exists();
+        
+        if ($clientsAttachedToOtherUsers) {
+            return redirect()->route('user.display');
+        }
+        
+        $user = User::find($id);
+        $user->clients()->syncWithoutDetaching($clientId);
     }
-    $show = $user->clients()->get();
+    
+    return redirect()->route('user.display');
+}
 
-    return redirect()->route('user.display'); 
-}   
+
 
 public function chatbox($id=null)
 {
@@ -147,7 +172,3 @@ public function adminmessage(Request $request,$id)
 }
 
 
-
-    //dd( $chatrecive);
-    // dd(auth()->user()->name);
-    // dd(@$user->id, auth()->user()->id,$chatbox->toArray());

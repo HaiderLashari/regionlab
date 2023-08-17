@@ -28,7 +28,7 @@ aside{
 	vertical-align:top;
 }
 main{
-	width:572px;
+	width:662px;
 	height:800px;
 	display:inline-block;
 	font-size:15px;
@@ -114,8 +114,8 @@ aside li h3{
 
 main header{
 	background: #242849;
-	height:110px;
-	padding:30px 20px 30px 40px;
+	height:90px;
+	padding:10px 20px 0px 40px;
 }
 main header > *{
 	display:inline-block;
@@ -143,12 +143,12 @@ main header h3{
 }
 
 #chat{
-	background: #a9b3b0;
+	background: #ffff;
 	padding-left:0;
 	margin:0;
 	list-style-type:none;
 	overflow-y:AUTO;
-	height:535px;
+	height:610px;
 /*	border:1px solid ;
 	border-bottom:2px solid #fff;*/
 }
@@ -202,16 +202,16 @@ main header h3{
 }
 
 main footer{
-	background:#a9b3b0;
-	height:155px;
-	padding:20px 30px 10px 20px;
+	background:#242849;
+    height: 100px;
+    padding: 5px 10px 0px 12px;
 }
 main footer textarea{
 	resize:none;
 	border:none;
 	display:block;
 	width:100%;
-	height:80px;
+	height:60px;
 	border-radius:3px;
 	padding:20px;
 	font-size:13px;
@@ -246,7 +246,7 @@ main footer a{
 
 </style>
 
-<div id="container" style="width:80%;">
+<div id="container" style="width:85%;">
 	<aside>
 	
 		<ul>
@@ -255,12 +255,10 @@ main footer a{
 			<li>
 			
 				<a href="{{url('/chatbox/'.$val->id)}}">
-
 				<img class="rounded-circle mt-2" width="45px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
 				<div>
 					<h2>{{$val->name}}</h2>
 				</div>
-
 				</a>
 			
 			</li>
@@ -307,8 +305,8 @@ main footer a{
 				
 				<div class="entete">
 					<span class="status green"></span>
-					<h2 class="text-white">{{$user->name}}</h2>
-					<h3 class="text-white">{{$value->created_at->format(' h:i:s')}}</h3>
+					<h2 class="">{{$user->name}}</h2>
+					<h3 >{{$value->created_at->format(' h:i:s')}}</h3>
 				</div>
 			</li>
 			
@@ -319,8 +317,8 @@ main footer a{
 				</div>
 				
 				<div class="entete">
-					<h3 class="text-white">{{$value->created_at->format(' h:i:s')}}</h3>
-					<h2 class="text-white">{{ auth()->user()->name }}</h2>
+					<h3 class="">{{$value->created_at->format(' h:i:s')}}</h3>
+					<h2 class="">{{ auth()->user()->name }}</h2>
 					<span class="status blue"></span>
 				</div>
 			</li>
@@ -331,13 +329,13 @@ main footer a{
 		 	<form action = "{{url('/adminmessage/'.@$user->id)}}" method="POST" >
            @csrf
           <div class="container">
-          <div class="row">
+          <div class="row" style="margin-top: 20px;">
           <div class="col-md-10 px-0">
  <input type="hidden" name="reciver_id" value="{{@$user->id}}">
 			<textarea type= "text" name="message" placeholder="Type your message"></textarea>
           </div>
-            <div class="col-md-2 mt-5">
-            <input type="submit" class="btn" value="send">	
+            <div class="col-md-2" style="margin-top:20px;">
+            <input type="submit" class=" send btn" value="send">	
           </div>
           </div>
           </div>
@@ -352,3 +350,5 @@ main footer a{
 </div>
 
 @endsection
+
+

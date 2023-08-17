@@ -27,7 +27,7 @@
                         </div>
                            <div class="form-group">
                             <label for="address">Time of Call:</label>
-                            <input type="time" class="form-control" placeholder="Enter your Time of Call" id="address" name="time_of_cell" required>
+                            <input type="time" class="form-control" placeholder="hrs:mins" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" id="address" name="time_of_cell" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">Work Phone:</label>
