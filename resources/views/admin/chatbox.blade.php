@@ -114,7 +114,7 @@ aside li h3{
 
 main header{
 	background: #242849;
-	height:90px;
+	height:84px;
 	padding:10px 20px 0px 40px;
 }
 main header > *{
@@ -252,16 +252,15 @@ main footer a{
 		<ul>
 			 @if(Auth::check() && Auth::user()->role == 'admin')
               @foreach($users as $val)
-			<li>
-			
 				<a href="{{url('/chatbox/'.$val->id)}}">
+			<li style="border-bottom: 1px solid white;">
 				<img class="rounded-circle mt-2" width="45px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
 				<div>
 					<h2>{{$val->name}}</h2>
 				</div>
-				</a>
 			
 			</li>
+				</a>
 			@endforeach
 			@elseif(Auth::check() && Auth::user()->role == 'user')
                @foreach($admin as $vel)
@@ -344,7 +343,7 @@ main footer a{
 			</form> 
 		</footer>
 	  @else
-	  <img style="height: 100%;width: 100%"  src="{{url('/public/empitysms.png')}}">
+	  <img style="height: 100%;width: 100%;object-fit: cover;"  src="https://cdn.dribbble.com/users/1590794/screenshots/5822231/blank_inbox_email.png">
 	  @endif
 	</main>
 </div>

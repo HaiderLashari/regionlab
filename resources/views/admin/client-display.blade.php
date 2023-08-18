@@ -31,6 +31,8 @@
     background: #efeff6;
 }
 </style>
+       
+
 @if(Auth::check() && Auth::user()->role == 'admin')
 <div style="background:#efeff6;" class="ml-3 d-flex ">
   <a href="{{url('/client-add')}}"  class="btn btn-warning px-4 py-2 mr-2 mb-2 " style="font-size: 20px; font-weight: bolde;">Add</a>
@@ -64,7 +66,6 @@
     <tbody>
       @if(Auth::check() && Auth::user()->role == 'admin')
       @foreach($clients as $index => $val)
-       
       <tr class="border">
        <td>{{$index+1}}</td>
        <td>{{$val->name}}</td>
@@ -100,6 +101,7 @@
   </div>
 </div></td>
    </tr>
+
 
 @endforeach
 @else
@@ -336,7 +338,6 @@
 </div>
 @endforeach 
 
-
 @foreach($clients as $index => $val)
 <div class="modal fade" id="exampleModalabc{{$val->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$val->id}}" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -349,17 +350,19 @@
       </div>
       <div class="modal-body">
         <form action="{{url('/user-access/'.$val->id)}}" id="accessForm" method="post">
+
           @csrf
-            @php
-            $client = App\Client::find($val->id);
-            // echo $client->id;
-            $assignuser = $client->users()->get()->first()->toArray();
-         
-            @endphp
-          <select name="user_id[]" class="form-control" required>
-            @foreach($users as $user)
-            <option  value="{{$user->id}}"@if(in_array($user->id, $assignuser)) selected @endif >{{$user->name}}</option>
-            @endforeach
+     
+     @php
+        $client = App\Client::find($val->id);
+        $assignuser = $client->users()->get()->first();
+    @endphp
+
+
+          <select name="user_id[]" class="form-control" required>   
+          @foreach($users as $user)
+       <option value="{{ $user->id }}" @if($assignuser && in_array($user->id, $assignuser->toArray())) selected @endif>{{ $user->name }}</option>
+              @endforeach
 
           </select>
         </div>
@@ -396,7 +399,7 @@
                                 <option value="file">File</option>
                               </select>
                         </div>
-                        <div class="form-group fileInput mt-4"  styl7="display: none;">
+                        <div class="form-group fileInput mt-4"  style="display: none;">
                             <label class="mb-0">Add Comment File</label><br>
                               <input class="w-75 mt-3 ml-3" type="file" name="file" accept=".csv">
                         </div>
@@ -465,3 +468,20 @@
 
 
 
+
+{{--   @php
+        $client = App\Client::find($val->id);
+        $assignuser = $client->users()->get()->first();
+    @endphp
+
+    <select name="user_id[]" class="form-control" required>
+        @foreach($users as $user)
+            <option value="{{ $user->id }}" @if($assignuser && in_array($user->id, $assignuser->toArray())) selected @endif>{{ $user->name }}</option>
+        @endforeach
+    </select>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</form> --}}

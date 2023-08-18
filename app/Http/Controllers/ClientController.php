@@ -26,7 +26,7 @@ class ClientController extends Controller
         $finds = auth::user();
         $finds = $finds->clients()->get();   
         $clients = Client::all();
-        $users = User::where('id', '!=', auth()->user()->id)->get();
+        $users = User::where('id', '!=', auth()->user()->id)->where('role', 'user')->get();
         $client = Client::all();
         // $firstassign = $client->users()->pluck('users.id')->toArray();
         
@@ -152,7 +152,7 @@ class ClientController extends Controller
                 } else {
                     if (count($header) === count($row)) {
                         $data[] = array_combine($header, $row);
-               // $new_arr = array_dif_key()
+            
                     } else {
                         
                         
@@ -172,7 +172,7 @@ class ClientController extends Controller
            $additional = json_encode($filteredData,true);
             }
              $value['addtional_detail'] = $additional;
-
+       
             $fb = $value;
              $col = [
                 'person_responsible' => $fb['Person Responsible'],
@@ -190,9 +190,18 @@ class ClientController extends Controller
                 'lead_id' => $fb['Lead ID'],
             ];
                 $col['addtional_detail'] = $additional;
-            
-            $obj = new Client;
+
+                $check = $col['email'];
+            $checkemail = Client::where('email',$check)->first();
+           if($checkemail == null){
+
+        $obj = new Client;
             $obj->create($col);
+
+           }else{
+                
+                                           echo "<script>alert('Email is already exist');</script>";
+           }     
         }
         return redirect()->route('client.display');
     }
@@ -330,4 +339,18 @@ class ClientController extends Controller
 //         'finds' => $finds,
 //         'clientAssignments' => $clientAssignments,
 //     ]);
+// }
+
+
+// foreach ($data as $row) {
+//     // ... your existing code ...
+
+//     // Check if the email already exists in the database
+//     $existingClient = Client::where('email', $row['Work E-mail'])->first();
+//     if ($existingClient) {
+//         return redirect()->back()->withErrors(['file' => 'Email ' . $row['Work E-mail'] . ' already exists']);
+//     }
+
+//     $obj = new Client;
+//     $obj->create($col);
 // }

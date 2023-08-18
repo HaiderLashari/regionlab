@@ -72,7 +72,17 @@ body {
 
 
 
-
+{{--     @php
+            $client = App\Client::find($val->id);
+            // echo $client->id;
+            $assignuser = $client->users()->get()->first()->toArray();
+         
+            @endphp
+          <select name="user_id[]" class="form-control" required>
+            @foreach($users as $user)
+            <option  value="{{$user->id}}"@if(in_array($user->id,$assignuser)) selected @endif >{{$user->name}}</option>
+            @endforeach
+ --}}
 
 
 

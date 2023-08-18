@@ -7,16 +7,14 @@
   thead tr th{
     color: white!important;
   }
- span.select2.select2-container.select2-container--default {
-    width: 100% !important;
-}
+
 </style>
 @if(Auth::check() && Auth::user()->role == 'admin')
 <div style="background:#efeff6;" class="ml-3 d-flex "><a href="{{ url('user/insert')}}"  class="btn btn-primary px-4 py-2 " style="font-size: 20px; font-weight: bolde;">Add</a></div>
 @endif
 
 <div class="container card px-0 " style="width: 97%;">
-  <table class="table ">
+  <table class="table">
     <thead class="bg-primary text-white">
       <tr >
         <th>ID</th>
@@ -36,8 +34,11 @@
        <td>{{$val->email}}</td>
        <td>{{$val->role}}</td>
        <td><a href="{{ route('user.edit', ['id' => $val->id]) }}" class="btn btn-success">Update</a></td>
+       @if($val->role != "admin")
        <td><a href="{{ route('user.destroy', ['id' => $val->id]) }}" class="btn btn-danger">Delete</a></td>
-       
+       @else
+       <td><a  class="btn btn-danger text-white">Delete</a></td>
+       @endif
        <td>
         @if($val->role == 'user')
         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$val->id}}">
@@ -63,10 +64,11 @@
           </div>
           <div class="modal-body">
 
-                  <form action="{{url('/client-access/'.$val->id)}}" id="accessForm" method="post">
+                  <form action="{{url('/client-access/'.$val->id)}}"  id="accessForm" method="post">
                     @csrf
-                   <select name="client_id[]" class="multiple" class="js-states form-control" multiple required>
-                    @foreach($clients as $client)
+   
+                   <select name="client_id[]" class="multiple" class="js-states form-control" multiple required style="width:auto;">
+                    @foreach($unassignedClients as $client)
                     <option value="{{$client->id}}">{{$client->name}}</option>
                     @endforeach
                   </select>
@@ -96,3 +98,4 @@
     </script>
   @endforeach
   @endsection
+

@@ -45,8 +45,9 @@ public function display()
     $finds = $finds->clients()->get(); 
 
     $users = User::all();
-    $clients = Client::all();
-    return view('admin.user_display', ['users' => $users, 'clients' => $clients,'finds'=>$finds]);
+   $unassignedClients = Client::whereDoesntHave('users')->get();
+    
+    return view('admin.user_display', ['users' => $users, 'finds'=>$finds,'unassignedClients'=>$unassignedClients]);
 }
 
 
@@ -119,26 +120,46 @@ public function showClientAccessForm()
 // }   
 
   
-public function saveClientAccess(Request $request, $id)
-{   
-    $requestedClients = $request->client_id;
+// public function saveClientAccess(Request $request, $id)
+// {   
+//     $requestedClients = $request->client_id;
     
+//     foreach ($requestedClients as $clientId) {
+//         $clientsAttachedToOtherUsers = User::whereHas('clients', function ($query) use ($clientId) {
+//             $query->where('clients.id', $clientId);
+//         })->where('id', '<>', $id)->exists();
+        
+//         if ($clientsAttachedToOtherUsers) {
+//             return redirect()->route('user.display');
+//         }
+        
+//         $user = User::find($id);
+//         $user->clients()->syncWithoutDetaching($clientId);
+//     }
+    
+//     return redirect()->route('user.display');
+// }
+
+public function saveClientAccess(Request $request, $id)
+{
+    $requestedClients = $request->client_id;
+    $unassignedClients = Client::whereDoesntHave('users')->get();
+
     foreach ($requestedClients as $clientId) {
         $clientsAttachedToOtherUsers = User::whereHas('clients', function ($query) use ($clientId) {
             $query->where('clients.id', $clientId);
         })->where('id', '<>', $id)->exists();
-        
+
         if ($clientsAttachedToOtherUsers) {
             return redirect()->route('user.display');
         }
-        
+
         $user = User::find($id);
         $user->clients()->syncWithoutDetaching($clientId);
     }
-    
-    return redirect()->route('user.display');
-}
 
+    return redirect()->route('user.display')->with('unassignedClients', $unassignedClients);
+}
 
 
 public function chatbox($id=null)
@@ -171,4 +192,23 @@ public function adminmessage(Request $request,$id)
 
 }
 
+// public function saveClientAccess(Request $request, $id)
+// {
+//     $requestedClients = $request->client_id;
+//     $unassignedClients = Client::whereDoesntHave('users')->get();
 
+//     foreach ($requestedClients as $clientId) {
+//         $clientsAttachedToOtherUsers = User::whereHas('clients', function ($query) use ($clientId) {
+//             $query->where('clients.id', $clientId);
+//         })->where('id', '<>', $id)->exists();
+
+//         if ($clientsAttachedToOtherUsers) {
+//             return redirect()->route('user.display');
+//         }
+
+//         $user = User::find($id);
+//         $user->clients()->syncWithoutDetaching($clientId);
+//     }
+
+//     return redirect()->route('user.display')->with('unassignedClients', $unassignedClients);
+// }

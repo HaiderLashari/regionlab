@@ -35,7 +35,7 @@
                          {{-- <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" > --}}
                    
 
-                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                     <input id="email" type="email" placeholder="Email..." class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
+                            {{-- <input class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span> --}}
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary btn btn-block">Login</button>
@@ -57,7 +57,7 @@
             </div>
             <div class="card-footer bg-white p-0 ">
                 <div class="card-footer">
-                    <a href="{{ route('password.request') }}" class="footer-link">Forgot Password</a>
+                    {{-- <a href="{{ route('password.request') }}" class="footer-link">Forgot Password</a> --}}
                 </div>
             </div>
         </div>

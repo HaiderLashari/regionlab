@@ -44,7 +44,7 @@
                         
 
                         <li class="nav-item dropdown nav-user">
-                            <a class="nav-link border nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accout</a>
+                            <a class="nav-link border nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown b" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
                                     <h5 class="mb-0 text-white nav-user-name">{{auth()->user()->name}}</h5>
@@ -52,7 +52,7 @@
                                 @if(auth()->check())
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
+                                    <button type="submit" class="dropdown-item" style="cursor: pointer;">Logout</button>
                                 </form>
                                 @endif
 
