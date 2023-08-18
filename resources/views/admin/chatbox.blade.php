@@ -203,7 +203,7 @@ main header h3{
 
 main footer{
 	background:#242849;
-    height: 100px;
+    height: 106px;
     padding: 5px 10px 0px 12px;
 }
 main footer textarea{
