@@ -67,7 +67,7 @@
                   <form action="{{url('/client-access/'.$val->id)}}"  id="accessForm" method="post">
                     @csrf
    
-                   <select name="client_id[]" class="multiple" class="js-states form-control" multiple required style="width:100%;">
+                   <select name="client_id[]" class="multiple" class="js-states form-control" multiple required >
                     @foreach($unassignedClients as $client)
                     <option value="{{$client->id}}">{{$client->name}}</option>
                     @endforeach
