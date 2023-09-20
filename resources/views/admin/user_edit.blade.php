@@ -63,7 +63,7 @@
 <div class="bdy">
     <div class="container">
         <h2> Update</h2>
-        <form action="" method="post">
+        <form action=" " method="post">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>

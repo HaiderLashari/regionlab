@@ -305,7 +305,7 @@ main footer a{
 				<div class="entete">
 					<span class="status green"></span>
 					<h2 class="">{{$user->name}}</h2>
-					<h3 >{{$value->created_at->format(' h:i:s')}}</h3>
+					<h3 >{{$value->created_at->format(' H:i:s')}}</h3>
 				</div>
 			</li>
 			
