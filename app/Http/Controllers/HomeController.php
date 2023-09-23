@@ -45,7 +45,7 @@ public function display()
     $finds = $finds->clients()->get(); 
 
     $users = User::all();
-   $unassignedClients = Client::whereDoesntHave('users')->get();
+    $unassignedClients = Client::whereDoesntHave('users')->get();
     
     return view('admin.user_display', ['users' => $users, 'finds'=>$finds,'unassignedClients'=>$unassignedClients]);
 }
@@ -53,21 +53,21 @@ public function display()
 
 public function create(Request $request)
 {
-          $validator =  $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'role'=>'required',
-            'password' => 'required|min:8'
-        ]);
+  $validator =  $request->validate([
+    'name' => 'required',
+    'email' => 'required|email|unique:users',
+    'role'=>'required',
+    'password' => 'required|min:8'
+]);
 
-    $user = new User;
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->password = Hash::make($request->password);
-    $user->role = $request->role;
-    $user->save();
+  $user = new User;
+  $user->name = $request->name;
+  $user->email = $request->email;
+  $user->password = Hash::make($request->password);
+  $user->role = $request->role;
+  $user->save();
 
-    return redirect()->route('user.display');
+  return redirect()->route('user.display');
 }
 
 public function edit($id)
@@ -106,7 +106,7 @@ public function showClientAccessForm()
 
 // public function saveClientAccess(Request $request,$id)
 // {   
-   
+
 
 //     $user = User::find($id);
 
@@ -119,24 +119,24 @@ public function showClientAccessForm()
 //     return redirect()->route('user.display'); 
 // }   
 
-  
+
 // public function saveClientAccess(Request $request, $id)
 // {   
 //     $requestedClients = $request->client_id;
-    
+
 //     foreach ($requestedClients as $clientId) {
 //         $clientsAttachedToOtherUsers = User::whereHas('clients', function ($query) use ($clientId) {
 //             $query->where('clients.id', $clientId);
 //         })->where('id', '<>', $id)->exists();
-        
+
 //         if ($clientsAttachedToOtherUsers) {
 //             return redirect()->route('user.display');
 //         }
-        
+
 //         $user = User::find($id);
 //         $user->clients()->syncWithoutDetaching($clientId);
 //     }
-    
+
 //     return redirect()->route('user.display');
 // }
 
@@ -189,26 +189,14 @@ public function adminmessage(Request $request,$id)
 
     return redirect()->back();
 }
-
+public function assignBulkUser(Request $request){
+    // dd($request->all());
+    $user = User::find($request->user_id);
+    $clientIdsString = $request->clients;
+    $clientIdsArray = explode(',', $clientIdsString);
+    // dd($clientIdsArray);
+    $user->clients()->attach($clientIdsArray);
+    return redirect()->back();
+}
 }
 
-// public function saveClientAccess(Request $request, $id)
-// {
-//     $requestedClients = $request->client_id;
-//     $unassignedClients = Client::whereDoesntHave('users')->get();
-
-//     foreach ($requestedClients as $clientId) {
-//         $clientsAttachedToOtherUsers = User::whereHas('clients', function ($query) use ($clientId) {
-//             $query->where('clients.id', $clientId);
-//         })->where('id', '<>', $id)->exists();
-
-//         if ($clientsAttachedToOtherUsers) {
-//             return redirect()->route('user.display');
-//         }
-
-//         $user = User::find($id);
-//         $user->clients()->syncWithoutDetaching($clientId);
-//     }
-
-//     return redirect()->route('user.display')->with('unassignedClients', $unassignedClients);
-// }

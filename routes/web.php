@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/',[HomeController::class,'index']);
 
 Route::get('user/insert',[HomeController::class,'show']);
+Route::post('assignBulkUser',[HomeController::class,'assignBulkUser']);
 Route::post('/user-form', [HomeController::class, 'create']);
 Route::get('/user-data', [HomeController::class, 'display'])->name('user.display');
 Route::post('users/edit/{id}', [HomeController::class, 'update'])->name('user.update');
@@ -34,6 +35,7 @@ Route::post('/adminmessage/{id}', [HomeController::class, 'adminmessage'])->name
 Route::get('/client-add', [ClientController::class, 'index'])->name('client.add');
 Route::post('/client-create', [ClientController::class, 'create'])->name('client.create');
 Route::get('/client-display', [ClientController::class, 'display'])->name('client.display');
+Route::get('/client-display2', [ClientController::class, 'display2'])->name('client.display');
 Route::get('/client-edit/{id}', [ClientController::class, 'edit'])->name('client.edit');
 Route::post('/client-edit/{id}', [ClientController::class, 'update'])->name('client.update');
 Route::get('/client-destroy/{id}', [ClientController::class, 'destroy'])->name('client.destroy');
