@@ -256,7 +256,7 @@ main footer a{
 			<li style="border-bottom: 1px solid white;">
 				<img class="rounded-circle mt-2" width="45px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
 				<div>
-					<h2>{{$val->name}}</h2>
+					<h2>{{$val->name}} </h2> <p class="badge badge-success">{{$val->role}}</p>
 				</div>
 			
 			</li>
@@ -270,7 +270,7 @@ main footer a{
 				<a href="{{url('/chatbox/'.$vel['id'])}}">
 				<img class="rounded-circle mt-2" width="45px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
 				<div>
-					<h2>{{$vel['name']}}</h2>
+					<h2>{{$vel['name']}}</h2><p class="badge badge-success">{{$val->role}}</p>
 				</div>
 
 				</a>

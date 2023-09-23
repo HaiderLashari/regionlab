@@ -33,6 +33,7 @@ Route::get('/chatbox/{id?}', [HomeController::class, 'chatbox']);
 Route::post('/adminmessage/{id}', [HomeController::class, 'adminmessage'])->name('adminmessage');
 
 Route::get('/client-add', [ClientController::class, 'index'])->name('client.add');
+Route::get('/Export-Client', [ClientController::class, 'export'])->name('export');
 Route::post('/client-create', [ClientController::class, 'create'])->name('client.create');
 Route::get('/client-display', [ClientController::class, 'display'])->name('client.display');
 Route::get('/client-display2', [ClientController::class, 'display2'])->name('client.display');

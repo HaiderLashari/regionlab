@@ -12,7 +12,8 @@ use League\Csv\Statement;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use DB;
-
+use App\Exports\Client2;
+use Maatwebsite\Excel\Facades\Excel;
 class ClientController extends Controller
 {
     public function index()
@@ -25,9 +26,9 @@ class ClientController extends Controller
     {
         $finds = auth::user();
         $finds = $finds->clients()->get();   
-        $clients = Client::all();
+        $clients = Client::with('users')->get();
         $users = User::where('id', '!=', auth()->user()->id)->where('role', 'user')->get();
-        $client = Client::all();
+        $client = Client::with('users')->get();
         // $firstassign = $client->users()->pluck('users.id')->toArray();
         
         return view('admin.client-display', ['clients' => $clients,'users' => $users ,'finds'=>$finds]);
@@ -39,72 +40,72 @@ class ClientController extends Controller
 
         // dd($request->all());
         if($request->country == null && $request->status == null && $request->date == null && $request->company == null){
-            $clients = Client::all();
+            $clients = Client::with('users')->get();
         }elseif($request->country != null && $request->status == null && $request->date == null && $request->company == null){
-            $clients = Client::where('country_of_residence', $request->country)->get();
+            $clients = Client::with('users')->where('country_of_residence', $request->country)->get();
         }elseif($request->country == null && $request->status != null && $request->date == null && $request->company == null){
-            $clients = Client::where('status', $request->status)->get();
+            $clients = Client::with('users')->where('status', $request->status)->get();
         }elseif ($request->country != null && $request->status != null && $request->company == null && $request->date == null) {
-            $clients = Client::where('status', $request->status)->where('country_of_residence', $request->country)->get();
+            $clients = Client::with('users')->where('status', $request->status)->where('country_of_residence', $request->country)->get();
         }elseif($request->country == null && $request->status == null && $request->date != null && $request->company == null){
-            $clients = Client::whereDate('created_at', '=', $request->date)->get();
+            $clients = Client::with('users')->whereDate('created_at', '=', $request->date)->get();
         }elseif($request->country != null && $request->status == null && $request->date != null && $request->company == null){
-            $clients = Client::whereDate('created_at', '=', $request->date)->where('country_of_residence', $request->country)->get();
+            $clients = Client::with('users')->whereDate('created_at', '=', $request->date)->where('country_of_residence', $request->country)->get();
         }elseif($request->country == null && $request->status != null && $request->date != null && $request->company == null){
-            $clients = Client::whereDate('created_at', '=', $request->date)->where('status', $request->status)->get();
+            $clients = Client::with('users')->whereDate('created_at', '=', $request->date)->where('status', $request->status)->get();
         }elseif($request->country != null && $request->status != null && $request->date != null && $request->company == null){
-            $clients = Client::whereDate('created_at', '=', $request->date)->where('status', $request->status)->where('country_of_residence', $request->country)->get();
+            $clients = Client::with('users')->whereDate('created_at', '=', $request->date)->where('status', $request->status)->where('country_of_residence', $request->country)->get();
         }elseif($request->country != null && $request->status != null && $request->date != null && $request->company != null){
-            $clients = Client::whereDate('created_at', '=', $request->date)->where('status', $request->status)->where('country_of_residence', $request->country)->where('company', $request->company)->get();
+            $clients = Client::with('users')->whereDate('created_at', '=', $request->date)->where('status', $request->status)->where('country_of_residence', $request->country)->where('company', $request->company)->get();
         }elseif($request->country == null && $request->status == null && $request->date == null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->get();
         }elseif($request->country == null && $request->status != null && $request->date == null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->where('status', $request->status)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->where('status', $request->status)->get();
         }elseif($request->country != null && $request->status == null && $request->date == null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->where('country_of_residence', $request->country)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->where('country_of_residence', $request->country)->get();
         }elseif($request->country == null && $request->status == null && $request->date != null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->whereDate('created_at', $request->date)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->whereDate('created_at', $request->date)->get();
         }elseif($request->country == null && $request->status != null && $request->date != null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->where('status', '=', $request->status)->whereDate('created_at', $request->date)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->where('status', '=', $request->status)->whereDate('created_at', $request->date)->get();
         }elseif($request->country != null && $request->status == null && $request->date != null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->where('country_of_residence', '=', $request->country)->whereDate('created_at', $request->date)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->where('country_of_residence', '=', $request->country)->whereDate('created_at', $request->date)->get();
         }elseif($request->country != null && $request->status != null && $request->date == null && $request->company != null){
-            $clients = Client::where('company', '=', $request->company)->where('country_of_residence', '=', $request->country)->where('status', $request->status)->get();
+            $clients = Client::with('users')->where('company', '=', $request->company)->where('country_of_residence', '=', $request->country)->where('status', $request->status)->get();
         }
         $all = [];
         $all = $request->all();
         unset($all['_token']);
         // dd($all);
         $users = User::where('id', '!=', auth()->user()->id)->where('role', 'user')->get();
-        $client = Client::all();
+        $client = Client::with('users')->get();
         // $firstassign = $client->users()->pluck('users.id')->toArray();
         
         return view('admin.client-display', ['clients' => $clients,'users' => $users ,'finds'=>$finds, 'all' => $all]);
     }
     public function create(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-           'new' => 'nullable',
-           'lead_id' => 'required',
-           'status' => 'nullable',
-           'time_of_cell' => 'required',
-           'person_responsible' => 'required',
-           'name' => 'required',
-           'email' => 'required|unique:clients',
-           'phone' => 'required',
-           'address' => 'nullable',
-           'company' => 'required',
-           'position' => 'required',
-           'comment' => 'nullable',
-           'type' => 'nullable',
-           'other_email' => 'nullable|email',
-           'other_phone' => 'nullable',
-           'country_of_residence' => 'required',
-           'nationality' => 'nullable',
-           'addtional_detail'=>'nullable',
+         'new' => 'nullable',
+         'lead_id' => 'required',
+         'status' => 'nullable',
+         'time_of_cell' => 'required',
+         'person_responsible' => 'required',
+         'name' => 'required',
+         'email' => 'required|unique:clients',
+         'phone' => 'required',
+         'address' => 'nullable',
+         'company' => 'required',
+         'position' => 'required',
+         'comment' => 'nullable',
+         'type' => 'nullable',
+         'other_email' => 'nullable|email',
+         'other_phone' => 'nullable',
+         'country_of_residence' => 'required',
+         'nationality' => 'nullable',
+         'addtional_detail'=>'nullable',
 
-       ]);
-
+     ]);
         $client = new Client;
         $client->new = $request->new;
         $client->lead_id = $request->lead_id;
@@ -127,7 +128,11 @@ class ClientController extends Controller
 
         return redirect()->route('client.display');
     }
-
+    public function export()
+    {
+        // $ids = [1, 2, 3]; // Replace with the IDs you want to export
+    return Excel::download(new Client2, 'filename.csv');
+    }
     public function edit($id)
     {
         $client = Client::findOrFail($id);
@@ -210,19 +215,19 @@ class ClientController extends Controller
                 fclose($handle);
             }
             foreach ($data as $value) {
-             $keysToRemove = ['Person Responsible', 'Status', 'Name', 'Position', 'Time of Call', 'Work Phone', 'Country', 'Other Phone Number', 'Work E-mail', 'Other E-mail', 'Company Name', 'Comments', 'Lead ID'];
-             $filteredData = array_diff_key($value, array_flip($keysToRemove));
+               $keysToRemove = ['Person Responsible', 'Status', 'Name', 'Position', 'Time of Call', 'Work Phone', 'Country', 'Other Phone Number', 'Work E-mail', 'Other E-mail', 'Company Name', 'Comments', 'Lead ID'];
+               $filteredData = array_diff_key($value, array_flip($keysToRemove));
 
-             if(empty($filteredData)){
+               if(empty($filteredData)){
                 $additional = null;
             }
             else{
-             $additional = json_encode($filteredData,true);
-         }
-         $value['addtional_detail'] = $additional;
+               $additional = json_encode($filteredData,true);
+           }
+           $value['addtional_detail'] = $additional;
 
-         $fb = $value;
-         $col = [
+           $fb = $value;
+           $col = [
             'person_responsible' => $fb['Person Responsible'],
             'status' => $fb['Status'],
             'name' => $fb['Name'],
@@ -248,10 +253,10 @@ class ClientController extends Controller
 
         }else{
 
-         echo "<script>alert('Email is already exist');</script>";
-     }     
- }
- return redirect()->route('client.display');
+           echo "<script>alert('Email is already exist');</script>";
+       }     
+   }
+   return redirect()->route('client.display');
 }
 }
 
@@ -304,11 +309,11 @@ public function saveUserAccess(Request $request, $id)
 
 public function addcomment(Request $request,$id)
 {
- $client = Client::find($id);
+   $client = Client::find($id);
 
- $selection = $request->input('selection');
+   $selection = $request->input('selection');
 
- if ($selection == 'comment') {
+   if ($selection == 'comment') {
     $data = [
         'comment' => $request->input('comment'),
         'type' => $request->input('selection')
@@ -343,12 +348,12 @@ elseif ($selection == 'file') {
     $url = url('storage/app/public/'.$filePath);
 
     $data = [
-     'comment' => $url,
-     'type' => $request->input('selection')
- ];
- $client->comment =$url;
- $client->type =$request->selection;
- $client->save();
+       'comment' => $url,
+       'type' => $request->input('selection')
+   ];
+   $client->comment =$url;
+   $client->type =$request->selection;
+   $client->save();
 
 }  
 

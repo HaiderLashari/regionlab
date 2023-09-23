@@ -319,7 +319,6 @@
 </form>
 </div>
 <div class="container-fluid  card  px-0 " style="width: 98%;">
-  
   <div class="d-flex mt-3">    
     <form method="post" action="{{url('/assignBulkUser')}}" class="d-flex">
       @csrf
@@ -336,7 +335,9 @@
       <input type="hidden" name="clients" value="" id="clientsinput">
     </form>
   </div>
-
+  <div class="text-right m-3">
+    <a href="{{url('/Export-Client')}}" class="btn btn-danger" style="width: 150px;">Export Clients</a>
+  </div>
   <table class="table" id="clientTable">
     <thead class="bg-primary text-white">
       <tr >
@@ -346,13 +347,16 @@
         <th>Company</th> 
         <th>Postion</th>
         <th>Time of Call</th>
+        <th>Status</th>
         <th>Work Phone</th>
+        <th>Assigned to</th>
         <th>Clients Detail</th>
       </tr>
     </thead>
     <tbody>
       @if(Auth::check() && Auth::user()->role == 'admin')
       @foreach($clients as $index => $val)
+
       <tr class="border">
         <td><input type="checkbox" class="record-checkbox" data-id="{{ $val->id }}"></td>
         <td>{{$index+1}}</td>
@@ -360,7 +364,9 @@
         <td>{{$val->company}}</td> 
         <td>{{$val->position}}</td>
         <td>{{$val->time_of_cell}}</td>
+        <td>{{$val->status}}</td>
         <td>{{$val->phone}}</td>
+        <td>{{@$val->users[0]->name}}</td>
         <td><div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{$val->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             View Detail
