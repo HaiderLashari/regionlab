@@ -319,17 +319,11 @@
 </form>
 </div>
 <div class="container-fluid  card  px-0 " style="width: 98%;">
-  <div class="d-flex mt-3 px-3 pt-3 justify-content-between">
-    <label class="m-1">Position</label>
-    <label class="m-1">Country</label>
-    <label class="m-1">Nationality</label>
-    <label class="m-1">Date</label>
-    <label class="m-1">Company</label>
-  </div> 
-  <div class="d-flex">    
+  
+  <div class="d-flex mt-3">    
     <form method="post" action="{{url('/assignBulkUser')}}" class="d-flex">
       @csrf
-      <label class="ml-4 mr-2 mt-2">Assign User:</label>
+      <label class="ml-2 mr-2 mt-2">Assign User:</label>
       <select class="form-control" id="assign_select" style="width: 200px;" disabled name="user_id">
         <option value="">Select</option>  
         @foreach($users as $user)
