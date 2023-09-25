@@ -64,23 +64,18 @@ class Client2 implements FromCollection
     		];
 
     		// 
-    		// dd($dataArray);
     		if(@$dataArray){
     			
     		foreach ($dataArray as $key2 => $dataArr) {
-    			// dd($key2)
     			$new_array[$key2] = $dataArr;
     			$arr[] = $key2;
     		}
     		}
-    		// dd($arr);
     		$new[] = $new_array;
     	}
     	
     	$dataCollection = collect([$arr])->concat($new);
-    	// $dataCollection = collect($new);
-    // dd($dataCollection);
-    // return $new;
+    	
     	return $dataCollection;
     }
 
