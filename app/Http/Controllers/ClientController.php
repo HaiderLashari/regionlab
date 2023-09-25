@@ -92,7 +92,7 @@ class ClientController extends Controller
          'time_of_cell' => 'required',
          'person_responsible' => 'required',
          'name' => 'required',
-         'email' => 'required|unique:clients',
+         'email' => 'required',
          'phone' => 'required',
          'address' => 'nullable',
          'company' => 'required',
