@@ -508,7 +508,6 @@
         .modeltable tr td{
           font-size: 14px;
           padding: 10px 0px 10px 10px;
-
         }
       </style>  
 
@@ -517,13 +516,13 @@
 
         @if($val->addtional_detail)
         @php
-        $merge = array_merge($val->toArray(), json_decode($val->addtional_detail, true));
-        unset($merge['addtional_detail']);
-        unset($merge['id']);
-        unset($merge['created_at']);
-        unset($merge['updated_at']);
+
+        $detail=json_decode($val->addtional_detail, true);
+ 
         @endphp
-        @foreach($merge as $k => $v)
+
+        @foreach($detail as $k => $v)
+
         @if(!empty($v))
         <tr>
           <th>{{$k}}:</th>

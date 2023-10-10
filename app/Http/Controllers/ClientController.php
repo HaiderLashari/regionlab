@@ -227,6 +227,7 @@ class ClientController extends Controller
            $value['addtional_detail'] = $additional;
 
            $fb = $value;
+        
            $col = [
             'person_responsible' => $fb['Person Responsible'],
             'status' => $fb['Status'],
@@ -240,8 +241,9 @@ class ClientController extends Controller
             'other_email' => $fb['Other E-mail'],
             'company' => $fb['Company Name'],
             'comment' => $fb['Comments'],
-            'lead_id' => $fb['Lead ID'],
+            'lead_id' => @$fb['Lead ID'],
         ];
+
         $col['addtional_detail'] = $additional;
 
         $check = $col['email'];
